@@ -11,7 +11,6 @@ export default [
       },
     },
     rules: {
-      // Твои правила:
       "comma-dangle": ["error", "always-multiline"],
       "comma-spacing": ["error", { before: false, after: true }],
       "eol-last": ["error", "always"],
@@ -24,7 +23,7 @@ export default [
       "object-curly-spacing": ["error", "always"],
       "object-shorthand": "error",
       "prefer-const": "error",
-      quotes: ["error", "single"], // двойные кавычки
+      quotes: ["error", "single"],
       semi: ["error", "always"],
       "space-in-parens": ["error", "never"],
       strict: ["error", "never"],
