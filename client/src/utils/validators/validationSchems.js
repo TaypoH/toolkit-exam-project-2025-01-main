@@ -3,10 +3,7 @@ import valid from 'card-validator';
 
 export default {
   LoginSchem: yup.object().shape({
-    email: yup
-      .string()
-      .email('check email')
-      .required('required'),
+    email: yup.string().email('check email').required('required'),
     password: yup
       .string()
       .test(
@@ -17,10 +14,7 @@ export default {
       .required('required'),
   }),
   RegistrationSchem: yup.object().shape({
-    email: yup
-      .string()
-      .email('check email')
-      .required('Email is required'),
+    email: yup.string().email('check email').required('Email is required'),
     password: yup
       .string()
       .test(
@@ -104,7 +98,7 @@ export default {
     file: yup.mixed(),
   }),
   filterSchem: yup.object().shape({
-    typeIndex: yup.number().oneOf[(1, 2, 3, 4, 5, 6, 7)],
+    typeIndex: yup.number().oneOf([1, 2, 3, 4, 5, 6, 7]),
     contestId: yup.string(),
     awardSort: yup.string().matches(/(desc|asc)/),
     industry: yup.string(),
@@ -125,11 +119,10 @@ export default {
   PaymentSchema: yup.object().shape({
     number: yup
       .string()
-      .test(
-        'test-cardNumber',
-        'Credit Card number is invalid',
-        value => valid.number(value).isValid
-      )
+      .test('test-cardNumber', 'Credit Card number is invalid', value => {
+        const result = valid.number(value);
+        return result && result.isValid;
+      })
       .required('required'),
     name: yup
       .string()
@@ -137,45 +130,42 @@ export default {
       .required('required'),
     cvc: yup
       .string()
-      .test('test-cvc', 'cvc is invalid', value => valid.cvv(value).isValid)
+      .test('test-cvc', 'cvc is invalid', value => {
+        const result = valid.cvv(value);
+        return result && result.isValid;
+      })
       .required('required'),
     expiry: yup
       .string()
-      .test(
-        'test-expiry',
-        'expiry is invalid',
-        value => valid.expirationDate(value).isValid
-      )
+      .test('test-expiry', 'expiry is invalid', value => {
+        const result = valid.expirationDate(value);
+        return result && result.isValid;
+      })
       .required('required'),
   }),
   CashoutSchema: yup.object().shape({
-    sum: yup
-      .number()
-      .min(5, 'min sum is 5$')
-      .required('required'),
+    sum: yup.number().min(5, 'min sum is 5$').required('required'),
     number: yup
       .string()
-      .test(
-        'test-cardNumber',
-        'Credit Card number is invalid',
-        value => valid.number(value).isValid
-      )
+      .test('test-cardNumber', 'Credit Card number is invalid', value => {
+        const result = valid.number(value);
+        return result && result.isValid;
+      })
       .required('required'),
-    name: yup
-      .string()
-      .min(1)
-      .required('required'),
+    name: yup.string().min(1).required('required'),
     cvc: yup
       .string()
-      .test('test-cvc', 'cvc is invalid', value => valid.cvv(value).isValid)
+      .test('test-cvc', 'cvc is invalid', value => {
+        const result = valid.cvv(value);
+        return result && result.isValid;
+      })
       .required('required'),
     expiry: yup
       .string()
-      .test(
-        'test-expiry',
-        'expiry is invalid',
-        value => valid.expirationDate(value).isValid
-      )
+      .test('test-expiry', 'expiry is invalid', value => {
+        const result = valid.expirationDate(value);
+        return result && result.isValid;
+      })
       .required('required'),
   }),
   UpdateUserSchema: yup.object().shape({
