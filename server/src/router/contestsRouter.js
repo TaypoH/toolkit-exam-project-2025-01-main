@@ -16,8 +16,11 @@ contestsRouter.post(
   userController.payment
 );
 
-contestsRouter.get(
-    '/byCustomer', contestController.getCustomersContests
-)
+contestsRouter.get('/byCustomer', contestController.getCustomersContests);
 
+contestsRouter.get(
+  '/:contestId',
+  basicMiddlewares.canGetContest,
+  contestController.getContestById
+);
 module.exports = contestsRouter;

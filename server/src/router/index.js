@@ -27,12 +27,6 @@ router.use('/contests', contestsRouter);
 
 router.post('/dataForContest', contestController.dataForContest);
 
-router.get(
-  '/getContestById',
-  basicMiddlewares.canGetContest,
-  contestController.getContestById
-);
-
 router.post(
   '/getAllContests',
   basicMiddlewares.onlyForCreative,
