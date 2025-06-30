@@ -71,7 +71,7 @@ class Header extends React.Component {
                 </Link>
               </li>
               <li>
-                <span onClick={this.logOut}>Logout</span>
+                <span onClick={this.logOut} className={styles.logout}>Logout</span>
               </li>
             </ul>
           </div>
