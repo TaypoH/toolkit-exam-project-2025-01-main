@@ -27,8 +27,6 @@ router.use('/contests', contestsRouter);
 
 router.post('/dataForContest', contestController.dataForContest);
 
-router.post('/getCustomersContests', contestController.getCustomersContests);
-
 router.get(
   '/getContestById',
   basicMiddlewares.canGetContest,
