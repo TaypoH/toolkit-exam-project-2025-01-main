@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
@@ -10,6 +10,13 @@ import Error from '../../components/Error/Error';
 
 const Payment = props => {
   const navigate = useNavigate();
+  const { contests } = props.contestCreationStore;
+
+  useEffect(() => {
+    if (isEmpty(contests)) {
+      navigate('/startContest', { replace: true });
+    }
+  }, [contests, navigate]);
 
   const pay = values => {
     const { contests } = props.contestCreationStore;
@@ -40,12 +47,9 @@ const Payment = props => {
     navigate(-1);
   };
 
-  const { contests } = props.contestCreationStore;
   const { error } = props.payment;
   const { clearPaymentStore } = props;
-  if (isEmpty(contests)) {
-    navigate('/startContest', { replace: true });
-  }
+
   return (
     <div className={styles.mainContainer}>
       <div className={styles.paymentContainer}>
