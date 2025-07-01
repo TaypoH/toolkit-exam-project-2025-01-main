@@ -34,6 +34,7 @@ class CustomerDashboard extends React.Component {
 
   componentDidUpdate (prevProps, prevState, snapshot) {
     if (this.props.customerFilter !== prevProps.customerFilter) {
+      this.props.clearContestsList();
       this.getContests();
     }
   }
