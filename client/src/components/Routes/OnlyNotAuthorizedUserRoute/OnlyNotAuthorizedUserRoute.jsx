@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Outlet } from 'react-router-dom';
-import { getUser } from '../../../store/slices/userSlice';
+import { getUser, clearUserStore } from '../../../store/slices/userSlice';
 import Spinner from '../../Spinner/Spinner';
+import CONSTANTS from '../../../constants';
 
 const OnlyNotAuthorizedUserRoute = () => {
   const navigate = useNavigate();
@@ -10,14 +11,27 @@ const OnlyNotAuthorizedUserRoute = () => {
   const { data, isFetching } = useSelector(state => state.userStore);
 
   useEffect(() => {
-    dispatch(getUser(navigate));
+    const token = localStorage.getItem(CONSTANTS.ACCESS_TOKEN);
+    if (token) {
+      dispatch(getUser())
+        .unwrap()
+        .then(() => {
+          navigate('/', { replace: true });
+        })
+        .catch(() => {
+          localStorage.clear();
+          dispatch(clearUserStore());
+        });
+    } else {
+      dispatch(clearUserStore());
+    }
   }, []);
 
   if (isFetching) {
     return <Spinner />;
   }
 
-  return data ? navigate('/') : <Outlet />;
+  return data ? null : <Outlet />;
 };
 
 export default OnlyNotAuthorizedUserRoute;

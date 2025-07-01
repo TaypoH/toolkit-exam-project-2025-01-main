@@ -10,8 +10,12 @@ import Logo from '../Logo';
 
 class Header extends React.Component {
   componentDidMount () {
-    if (!this.props.data) {
+    const token = localStorage.getItem(CONSTANTS.ACCESS_TOKEN);
+
+    if (token && !this.props.data) {
       this.props.getUser();
+    } else {
+      this.props.clearUserStore();
     }
   }
 

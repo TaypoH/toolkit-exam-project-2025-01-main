@@ -51,6 +51,7 @@ const reducers = {
   clearUserStore: state => {
     state.error = null;
     state.data = null;
+    state.isFetching = false;
   },
   clearUserError: state => {
     state.error = null;
