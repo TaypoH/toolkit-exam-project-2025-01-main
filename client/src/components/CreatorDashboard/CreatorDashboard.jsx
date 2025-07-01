@@ -48,6 +48,7 @@ class CreatorDashboard extends React.Component {
             value: types.indexOf(target.value),
           })
         }
+        name='typeIndex'
         value={types[creatorFilter.typeIndex]}
         className={styles.input}
       >
@@ -80,6 +81,7 @@ class CreatorDashboard extends React.Component {
             value: target.value,
           })
         }
+        name='industry'
         value={creatorFilter.industry}
         className={styles.input}
       >
@@ -252,6 +254,7 @@ class CreatorDashboard extends React.Component {
                     value: target.value,
                   })
                 }
+                name='awardSort'
                 value={creatorFilter.awardSort}
                 className={styles.input}
               >
