@@ -13,6 +13,7 @@ const PayInput = props => {
       <div className={classes.container}>
         <input
           {...field}
+          value={field.value || ''}
           placeholder={label}
           className={classNames(classes.input, {
             [classes.notValid]: touched && error,
@@ -31,6 +32,7 @@ const PayInput = props => {
           mask={mask}
           maskChar={null}
           {...field}
+          value={field.value || ''}
           placeholder={label}
           className={classNames(classes.input, {
             [classes.notValid]: touched && error,
@@ -47,6 +49,7 @@ const PayInput = props => {
     <div className={classes.container}>
       <input
         {...field}
+        value={field.value || ''}
         placeholder={label}
         className={classNames(classes.input, {
           [classes.notValid]: touched && error,
