@@ -51,6 +51,7 @@ const PayForm = props => {
                   <span>Name</span>
                   <PayInput
                     name='name'
+                    autocomplete='cc-name'
                     classes={{
                       container: styles.inputContainer,
                       input: styles.input,
@@ -67,6 +68,7 @@ const PayForm = props => {
                     <span>Sum</span>
                     <PayInput
                       name='sum'
+                      autocomplete='off'
                       classes={{
                         container: styles.inputContainer,
                         input: styles.input,
@@ -84,6 +86,7 @@ const PayForm = props => {
                     isInputMask
                     mask='9999 9999 9999 9999 999'
                     name='number'
+                    autocomplete='cc-number'
                     classes={{
                       container: styles.inputContainer,
                       input: styles.input,
@@ -102,6 +105,7 @@ const PayForm = props => {
                       isInputMask
                       mask='99/99'
                       name='expiry'
+                      autocomplete='cc-exp'
                       classes={{
                         container: styles.inputContainer,
                         input: styles.input,
@@ -119,6 +123,7 @@ const PayForm = props => {
                       isInputMask
                       mask='9999'
                       name='cvc'
+                      autocomplete='cc-csc'
                       classes={{
                         container: styles.inputContainer,
                         input: styles.input,

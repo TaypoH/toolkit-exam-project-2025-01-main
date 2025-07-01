@@ -4,7 +4,7 @@ import InputMask from 'react-input-mask';
 import { useField } from 'formik';
 
 const PayInput = props => {
-  const { label, changeFocus, classes, isInputMask, mask } = props;
+  const { label, changeFocus, classes, isInputMask, mask, autocomplete } = props;
   const [field, meta, helpers] = useField(props.name);
   const { touched, error } = meta;
 
@@ -14,6 +14,7 @@ const PayInput = props => {
         <input
           {...field}
           value={field.value || ''}
+          autoComplete={autocomplete}
           placeholder={label}
           className={classNames(classes.input, {
             [classes.notValid]: touched && error,
@@ -33,6 +34,7 @@ const PayInput = props => {
           maskChar={null}
           {...field}
           value={field.value || ''}
+          autoComplete={autocomplete}
           placeholder={label}
           className={classNames(classes.input, {
             [classes.notValid]: touched && error,
@@ -50,6 +52,7 @@ const PayInput = props => {
       <input
         {...field}
         value={field.value || ''}
+        autoComplete={autocomplete}
         placeholder={label}
         className={classNames(classes.input, {
           [classes.notValid]: touched && error,

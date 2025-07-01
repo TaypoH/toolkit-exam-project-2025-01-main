@@ -53,12 +53,14 @@ class LoginForm extends React.Component {
               name='email'
               type='text'
               label='Email Address'
+              autoComplete='username'
             />
             <FormInput
               classes={formInputClasses}
               name='password'
               type='password'
               label='Password'
+              autoComplete='current-password'
             />
             <button
               type='submit'
