@@ -70,7 +70,7 @@ const OfferForm = props => {
       <Formik
         onSubmit={setOffer}
         initialValues={{
-          offerData: null,
+          offerData: props.contestType === CONTANTS.LOGO_CONTEST ? null : '', // ✅
         }}
         validationSchema={validationSchema}
       >
