@@ -73,12 +73,14 @@ class RegistrationForm extends React.Component {
                 classes={formInputClasses}
                 type='text'
                 label='First name'
+                autoComplete='given-name'
               />
               <FormInput
                 name='lastName'
                 classes={formInputClasses}
                 type='text'
                 label='Last name'
+                autoComplete='family-name'
               />
             </div>
             <div className={styles.row}>
@@ -87,12 +89,14 @@ class RegistrationForm extends React.Component {
                 classes={formInputClasses}
                 type='text'
                 label='Display Name'
+                autoComplete='username'
               />
               <FormInput
                 name='email'
                 classes={formInputClasses}
                 type='text'
                 label='Email Address'
+                autoComplete='email'
               />
             </div>
             <div className={styles.row}>
@@ -101,6 +105,7 @@ class RegistrationForm extends React.Component {
                 classes={formInputClasses}
                 type='password'
                 label='Password'
+                autoComplete='new-password'
               />
               <FormInput
                 name='confirmPassword'
