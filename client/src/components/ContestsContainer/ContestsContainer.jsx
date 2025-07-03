@@ -18,7 +18,6 @@ class ContestsContainer extends React.Component {
     ) {
       if (this.props.haveMore) {
         this.props.loadMore(this.props.contests.length);
-        // this.props.loadMore(this.props.children.length);
       }
     }
   };
