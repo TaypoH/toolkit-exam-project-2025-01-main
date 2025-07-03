@@ -2,8 +2,9 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 const ServerError = require('../errors/ServerError');
+const { IMAGES_BASE_PATH } = require('../constants');
 const env = process.env.NODE_ENV || 'development';
-const devFilePath = path.resolve(__dirname, '..', '..', '..', 'public/images');
+const devFilePath = path.resolve(IMAGES_BASE_PATH);
 
 const filePath = env === 'production' ? '/var/www/html/images/' : devFilePath;
 

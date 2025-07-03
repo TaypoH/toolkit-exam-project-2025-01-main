@@ -70,17 +70,15 @@ const OfferForm = props => {
       <Formik
         onSubmit={setOffer}
         initialValues={{
-          offerData: '',
+          offerData: null,
         }}
         validationSchema={validationSchema}
       >
         <Form className={styles.form}>
           {renderOfferInput()}
-          {valid && (
-            <button type='submit' className={styles.btnOffer}>
-              Send Offer
-            </button>
-          )}
+          <button type='submit' className={styles.btnOffer}>
+            Send Offer
+          </button>
         </Form>
       </Formik>
     </div>
