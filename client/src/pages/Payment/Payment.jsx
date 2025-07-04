@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import isEmpty from 'lodash/isEmpty';
 import { pay, clearPaymentStore } from '../../store/slices/paymentSlice';
 import PayForm from '../../components/PayForm/PayForm';
 import styles from './Payment.module.sass';
-import CONSTANTS from '../../constants';
 import Error from '../../components/Error/Error';
 
 const Payment = props => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { contests } = props.contestCreationStore;
 
   useEffect(() => {
@@ -19,21 +19,25 @@ const Payment = props => {
   }, [contests, navigate]);
 
   const pay = values => {
-    const { contests } = props.contestCreationStore;
-    const contestArray = [];
-    Object.keys(contests).forEach(key =>
-      contestArray.push({ ...contests[key] })
-    );
+    const contestsArray = Object.values(contests).map(contest => ({ ...contest }));
+    const file = location.state && location.state.file;
     const { number, expiry, cvc } = values;
     const data = new FormData();
-    for (let i = 0; i < contestArray.length; i++) {
-      data.append('files', contestArray[i].file);
-      contestArray[i].haveFile = !!contestArray[i].file;
+
+    if (file) {
+      data.append('files', file);
+      contestsArray.forEach(contest => {
+        contest.haveFile = true;
+      });
+    } else {
+      contestsArray.forEach(contest => {
+        contest.haveFile = false;
+      });
     }
     data.append('number', number);
     data.append('expiry', expiry);
     data.append('cvc', cvc);
-    data.append('contests', JSON.stringify(contestArray));
+    data.append('contests', JSON.stringify(contestsArray));
     data.append('price', '100');
     props.pay({
       data: {

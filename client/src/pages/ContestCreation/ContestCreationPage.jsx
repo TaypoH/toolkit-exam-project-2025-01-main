@@ -17,12 +17,21 @@ const ContestCreationPage = props => {
     : { contestType: props.contestType };
 
   const handleSubmit = values => {
-    props.saveContest({ type: props.contestType, info: values });
+    const serializableValues = { ...values };
+    const file = values.file;
+    delete serializableValues.file;
+    props.saveContest({ type: props.contestType, info: serializableValues });
+
     const route =
       props.bundleStore.bundle[props.contestType] === 'payment'
         ? '/payment'
         : `/startContest/${props.bundleStore.bundle[props.contestType]}Contest`;
-    navigate(route);
+
+    if (props.bundleStore.bundle[props.contestType] === 'payment') {
+      navigate(route, { state: { file } });
+    } else {
+      navigate(route);
+    }
   };
 
   const submitForm = () => {
