@@ -38,6 +38,7 @@ export const getActiveContests = ({
   industry,
   awardSort,
   ownEntries,
+  onlyActive,
 }) =>
   http.post('getAllContests', {
     offset,
@@ -47,6 +48,7 @@ export const getActiveContests = ({
     industry,
     awardSort,
     ownEntries,
+    onlyActive,
   });
 
 export const getContestById = ({contestId}) =>

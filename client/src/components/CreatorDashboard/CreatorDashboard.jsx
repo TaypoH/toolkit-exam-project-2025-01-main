@@ -113,15 +113,19 @@ class CreatorDashboard extends React.Component {
     });
   };
 
-  changePredicate = ({ name, value }) => {
+  changePredicate = ({ name, value, resetOnlyActive, resetOwnEntries }) => {
     const { creatorFilter } = this.props;
-    this.props.newFilter({
-      [name]: value === 'Choose industry' ? null : value,
-    });
-    this.parseParamsToUrl({
-      ...creatorFilter,
-      ...{ [name]: value === 'Choose industry' ? null : value },
-    });
+    let newFilter = { ...creatorFilter, [name]: value === 'Choose industry' ? null : value };
+    if (resetOnlyActive) {
+      newFilter.onlyActive = false;
+    }
+    if (resetOwnEntries) {
+      newFilter.ownEntries = false;
+    }
+    this.props.newFilter(newFilter);
+    this.parseParamsToUrl(newFilter);
+    this.props.clearContestsList();
+    this.getContests(newFilter);
   };
 
   parseParamsToUrl = creatorFilter => {
@@ -129,6 +133,7 @@ class CreatorDashboard extends React.Component {
     Object.keys(creatorFilter).forEach(el => {
       if (creatorFilter[el]) obj[el] = creatorFilter[el];
     });
+    if (creatorFilter.onlyActive) obj.onlyActive = creatorFilter.onlyActive;
     this.props.navigate(`/Dashboard?${queryString.stringify(obj)}`);
   };
 
@@ -141,6 +146,8 @@ class CreatorDashboard extends React.Component {
       awardSort: obj.awardSort || 'asc',
       ownEntries:
         typeof obj.ownEntries === 'undefined' ? false : obj.ownEntries,
+      onlyActive:
+        typeof obj.onlyActive === 'undefined' ? false : obj.onlyActive === 'true' || obj.onlyActive === true,
     };
     if (!isEqual(filter, this.props.creatorFilter)) {
       this.props.newFilter(filter);
@@ -160,6 +167,7 @@ class CreatorDashboard extends React.Component {
       }
     });
     obj.ownEntries = creatorFilter.ownEntries;
+    obj.onlyActive = creatorFilter.onlyActive;
     return obj;
   };
 
@@ -175,10 +183,12 @@ class CreatorDashboard extends React.Component {
     const array = [];
     const { contests } = this.props;
     for (let i = 0; i < contests.length; i++) {
+      const contest = contests[i];
+      const key = contest.id + '-' + i;
       array.push(
         <ContestBox
-          data={contests[i]}
-          key={contests[i].id}
+          data={contest}
+          key={key}
           goToExtended={this.goToExtended}
         />
       );
@@ -207,18 +217,35 @@ class CreatorDashboard extends React.Component {
         <div className={styles.filterContainer}>
           <span className={styles.headerFilter}>Filter Results</span>
           <div className={styles.inputsContainer}>
-            <div
-              onClick={() =>
-                this.changePredicate({
-                  name: 'ownEntries',
-                  value: !creatorFilter.ownEntries,
-                })
-              }
-              className={classNames(styles.myEntries, {
-                [styles.activeMyEntries]: creatorFilter.ownEntries,
-              })}
-            >
-              My Entries
+            <div className={styles.filterButtons}>
+              <div
+                onClick={() =>
+                  this.changePredicate({
+                    name: 'ownEntries',
+                    value: creatorFilter.ownEntries ? false : true,
+                    resetOnlyActive: true,
+                  })
+                }
+                className={classNames(styles.myEntries, {
+                  [styles.activeMyEntries]: creatorFilter.ownEntries,
+                })}
+              >
+                My Entries
+              </div>
+              <div
+                onClick={() =>
+                  this.changePredicate({
+                    name: 'onlyActive',
+                    value: creatorFilter.onlyActive ? false : true,
+                    resetOwnEntries: true,
+                  })
+                }
+                className={classNames(styles.myEntries, {
+                  [styles.activeMyEntries]: creatorFilter.onlyActive,
+                })}
+              >
+                Only Active
+              </div>
             </div>
             <div className={styles.inputContainer}>
               <span>By contest type</span>

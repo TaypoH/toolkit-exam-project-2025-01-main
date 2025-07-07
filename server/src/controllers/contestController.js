@@ -284,12 +284,15 @@ module.exports.getCustomersContests = (req, res, next) => {
 };
 
 module.exports.getContests = (req, res, next) => {
-  const predicates = UtilFunctions.createWhereForAllContests(
+  let predicates = UtilFunctions.createWhereForAllContests(
     req.body.typeIndex,
     req.body.contestId,
     req.body.industry,
     req.body.awardSort
   );
+  if (req.body.onlyActive) {
+    predicates.where.status = CONSTANTS.CONTEST_STATUS_ACTIVE;
+  }
   db.Contests.findAll({
     where: predicates.where,
     order: predicates.order,
