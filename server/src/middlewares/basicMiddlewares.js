@@ -1,5 +1,4 @@
 const bd = require('../models');
-const NotFound = require('../errors/UserNotFoundError');
 const RightsError = require('../errors/RightsError');
 const ServerError = require('../errors/ServerError');
 const CONSTANTS = require('../constants');
@@ -17,13 +16,16 @@ module.exports.parseBody = (req, res, next) => {
 };
 
 module.exports.canGetContest = async (req, res, next) => {
-const {params: {contestId}, tokenData: {userId, role}} = req;
+  const {
+    params: { contestId },
+    tokenData: { userId, role },
+  } = req;
 
   let result = null;
   try {
     if (role === CONSTANTS.CUSTOMER) {
       result = await bd.Contests.findOne({
-        where: { id: contestId, userId},
+        where: { id: contestId, userId },
       });
     } else if (role === CONSTANTS.CREATOR) {
       result = await bd.Contests.findOne({
@@ -78,7 +80,7 @@ module.exports.canSendOffer = async (req, res, next) => {
     } else {
       return next(new RightsError());
     }
-  } catch (e) {
+  } catch {
     next(new ServerError());
   }
 };
@@ -96,7 +98,7 @@ module.exports.onlyForCustomerWhoCreateContest = async (req, res, next) => {
       return next(new RightsError());
     }
     next();
-  } catch (e) {
+  } catch {
     next(new ServerError());
   }
 };
@@ -114,7 +116,7 @@ module.exports.canUpdateContest = async (req, res, next) => {
       return next(new RightsError());
     }
     next();
-  } catch (e) {
+  } catch {
     next(new ServerError());
   }
 };

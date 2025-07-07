@@ -12,7 +12,6 @@ module.exports.dataForContest = async (req, res, next) => {
     const {
       body: { characteristic1, characteristic2 },
     } = req;
-    console.log(req.body, characteristic1, characteristic2);
     const types = [characteristic1, characteristic2, 'industry'].filter(
       Boolean
     );
@@ -35,7 +34,6 @@ module.exports.dataForContest = async (req, res, next) => {
     });
     res.send(response);
   } catch (err) {
-    console.log(err);
     next(new ServerError('cannot get contest preferences'));
   }
 };
@@ -166,15 +164,11 @@ const resolveOffer = async (
 ) => {
   const finishedContest = await contestQueries.updateContestStatus(
     {
-      status: db.sequelize.literal(`   CASE
-            WHEN "id"=${contestId}  AND "orderId"='${orderId}' THEN '${
-        CONSTANTS.CONTEST_STATUS_FINISHED
-      }'
-            WHEN "orderId"='${orderId}' AND "priority"=${priority + 1}  THEN '${
-        CONSTANTS.CONTEST_STATUS_ACTIVE
-      }'
-            ELSE '${CONSTANTS.CONTEST_STATUS_PENDING}'
-            END
+      status: db.sequelize.literal(`CASE
+        WHEN "id"=${contestId}  AND "orderId"='${orderId}' THEN '${CONSTANTS.CONTEST_STATUS_FINISHED}'
+        WHEN "orderId"='${orderId}' AND "priority"=${priority + 1}  THEN '${CONSTANTS.CONTEST_STATUS_ACTIVE}'
+        ELSE '${CONSTANTS.CONTEST_STATUS_PENDING}'
+      END
     `),
     },
     { orderId },
@@ -280,10 +274,10 @@ module.exports.getCustomersContests = (req, res, next) => {
       const totalCount = await db.Contests.count({
         where: { status, userId },
       });
-      
+
       const currentOffset = offset ? parseInt(offset) : 0;
       const haveMore = currentOffset + contests.length < totalCount;
-      
+
       res.send({ contests, haveMore });
     })
     .catch(err => next(new ServerError(err)));
@@ -318,10 +312,10 @@ module.exports.getContests = (req, res, next) => {
       const totalCount = await db.Contests.count({
         where: predicates.where,
       });
-      
+
       const currentOffset = req.body.offset ? parseInt(req.body.offset) : 0;
       const haveMore = currentOffset + contests.length < totalCount;
-      
+
       res.send({ contests, haveMore });
     })
     .catch(err => {

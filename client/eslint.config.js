@@ -10,18 +10,18 @@ export default [
   {
     files: ['**/*.js', '**/*.jsx'],
     languageOptions: {
-      ecmaVersion: 6,
+      ecmaVersion: 2022,
       sourceType: 'module',
       parserOptions: {
         ecmaFeatures: { jsx: true },
       },
       globals: {
-        // Эквивалент browser: true
         window: 'readonly',
         document: 'readonly',
         navigator: 'readonly',
+        FormData: 'readonly',
+        localStorage: 'readonly',
 
-        // Эквивалент jest: true
         describe: 'readonly',
         it: 'readonly',
         expect: 'readonly',
@@ -30,7 +30,6 @@ export default [
         afterEach: 'readonly',
         test: 'readonly',
 
-        // если используешь React без импорта
         React: 'writable',
       },
     },
@@ -51,11 +50,25 @@ export default [
       'jest/no-disabled-tests': 'warn',
       'jest/no-focused-tests': 'error',
       'jest/no-identical-title': 'error',
+      'no-unused-vars': ['error', { 
+        'varsIgnorePattern': '^[A-Z]',
+        'argsIgnorePattern': '^_'
+      }],
+      'react/jsx-uses-vars': 'error',
+      'react/jsx-uses-react': 'error',
     },
     settings: {
       react: {
         version: 'detect',
       },
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.jsx']
+        }
+      },
+      'import/parsers': {
+        espree: ['.js', '.jsx']
+      }
     },
   },
 ];
