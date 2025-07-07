@@ -272,14 +272,18 @@ module.exports.getCustomersContests = (req, res, next) => {
       },
     ],
   })
-    .then(contests => {
+    .then(async contests => {
       contests.forEach(
         contest => (contest.dataValues.count = contest.dataValues.Offers.length)
       );
-      let haveMore = true;
-      if (contests.length === 0) {
-        haveMore = false;
-      }
+
+      const totalCount = await db.Contests.count({
+        where: { status, userId },
+      });
+      
+      const currentOffset = offset ? parseInt(offset) : 0;
+      const haveMore = currentOffset + contests.length < totalCount;
+      
       res.send({ contests, haveMore });
     })
     .catch(err => next(new ServerError(err)));
@@ -306,14 +310,18 @@ module.exports.getContests = (req, res, next) => {
       },
     ],
   })
-    .then(contests => {
+    .then(async contests => {
       contests.forEach(
         contest => (contest.dataValues.count = contest.dataValues.Offers.length)
       );
-      let haveMore = true;
-      if (contests.length === 0) {
-        haveMore = false;
-      }
+
+      const totalCount = await db.Contests.count({
+        where: predicates.where,
+      });
+      
+      const currentOffset = req.body.offset ? parseInt(req.body.offset) : 0;
+      const haveMore = currentOffset + contests.length < totalCount;
+      
       res.send({ contests, haveMore });
     })
     .catch(err => {

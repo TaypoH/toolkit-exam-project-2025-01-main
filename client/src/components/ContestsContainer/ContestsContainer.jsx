@@ -12,12 +12,13 @@ class ContestsContainer extends React.Component {
   }
 
   scrollHandler = () => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop ===
-      document.documentElement.offsetHeight
-    ) {
-      if (this.props.haveMore) {
-        this.props.loadMore(this.props.contests.length);
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight = document.documentElement.scrollHeight;
+    const clientHeight = document.documentElement.clientHeight;
+
+    if (scrollTop + clientHeight >= scrollHeight - 200) {
+      if (this.props.haveMore && !this.props.isFetching) {
+        this.props.loadMore(this.props.children.length);
       }
     }
   };
