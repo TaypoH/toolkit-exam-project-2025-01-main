@@ -74,7 +74,7 @@ class ContestPage extends React.Component {
     );
   };
 
-  setOfferStatus = (creatorId, offerId, command) => {
+  setOfferStatus = async (creatorId, offerId, command) => {
     this.props.clearSetOfferStatusError();
     const { id, orderId, priority } = this.props.contestByIdStore.contestData;
     const obj = {
@@ -85,7 +85,8 @@ class ContestPage extends React.Component {
       priority,
       contestId: id,
     };
-    this.props.setOfferStatus(obj);
+    await this.props.setOfferStatus(obj);
+    this.props.getData({ contestId: id });
   };
 
   findConversationInfo = interlocutorId => {

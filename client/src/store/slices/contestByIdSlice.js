@@ -39,9 +39,7 @@ const getContestByIdExtraReducers = createExtraReducers({
   thunk: getContestById,
   pendingReducer: state => {
     state.isFetching = true;
-    state.contestData = null;
     state.error = null;
-    state.offers = [];
   },
   fulfilledReducer: (state, { payload: { contestData, offers } }) => {
     state.isFetching = false;
