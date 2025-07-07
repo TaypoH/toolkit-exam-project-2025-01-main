@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styles from './ContestCreationPage.module.sass';
@@ -9,6 +9,10 @@ import BackButton from '../../components/BackButton/BackButton';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 
 const ContestCreationPage = props => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const formRef = useRef();
   const navigate = useNavigate();
 

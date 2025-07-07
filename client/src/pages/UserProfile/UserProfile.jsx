@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import Header from '../../components/Header/Header';
@@ -11,6 +11,10 @@ import { changeProfileViewMode } from '../../store/slices/userProfileSlice';
 import Error from '../../components/Error/Error';
 
 const UserProfile = props => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const pay = values => {
     const { number, expiry, cvc, sum } = values;
     props.cashOut({
