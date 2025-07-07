@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { getUser, clearUserStore } from '../../../store/slices/userSlice';
 import { clearContestsList } from '../../../store/slices/contestsSlice';
+import { resetChat } from '../../../store/slices/chatSlice';
 import Spinner from '../../Spinner/Spinner';
 import CONSTANTS from '../../../constants';
 
@@ -23,10 +24,12 @@ const OnlyNotAuthorizedUserRoute = () => {
           localStorage.clear();
           dispatch(clearUserStore());
           dispatch(clearContestsList());
+          dispatch(resetChat());
         });
     } else {
       dispatch(clearUserStore());
       dispatch(clearContestsList());
+      dispatch(resetChat());
     }
   }, [dispatch, navigate]);
 

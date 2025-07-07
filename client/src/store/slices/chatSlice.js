@@ -396,6 +396,8 @@ const reducers = {
   clearChatError: state => {
     state.error = null;
   },
+
+  resetChat: () => initialState,
 };
 
 const extraReducers = builder => {
@@ -434,6 +436,7 @@ export const {
   changeShowAddChatToCatalogMenu,
   changeRenameCatalogMode,
   clearChatError,
+  resetChat,
 } = actions;
 
 export default reducer;

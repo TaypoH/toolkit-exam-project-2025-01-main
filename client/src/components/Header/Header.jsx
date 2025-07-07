@@ -6,6 +6,7 @@ import CONSTANTS from '../../constants';
 import { clearUserStore } from '../../store/slices/userSlice';
 import { getUser } from '../../store/slices/userSlice';
 import { clearContestsList } from '../../store/slices/contestsSlice';
+import { resetChat } from '../../store/slices/chatSlice';
 import withRouter from '../../hocs/withRouter';
 import Logo from '../Logo';
 
@@ -24,6 +25,7 @@ class Header extends React.Component {
     localStorage.clear();
     this.props.clearUserStore();
     this.props.clearContestsList();
+    this.props.resetChat();
     this.props.navigate('/login', { replace: true });
   };
 
@@ -296,6 +298,7 @@ const mapDispatchToProps = dispatch => ({
   getUser: () => dispatch(getUser()),
   clearUserStore: () => dispatch(clearUserStore()),
   clearContestsList: () => dispatch(clearContestsList()),
+  resetChat: () => dispatch(resetChat()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
