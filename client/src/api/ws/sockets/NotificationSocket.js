@@ -22,6 +22,9 @@ class NotificationSocket extends WebSocket {
 
   onChangeOfferStatus = () => {
     this.socket.on('changeOfferStatus', message => {
+      const state = this.getState();
+      const currentUserId = state.userStore?.data?.id;
+      if (message.userId && message.userId !== currentUserId) return;
       toast(
         <Notification message={message.message} contestId={message.contestId} />
       );

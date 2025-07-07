@@ -199,19 +199,19 @@ const resolveOffer = async (
       offer.status === CONSTANTS.OFFER_STATUS_REJECTED &&
       creatorId !== offer.userId
     ) {
-      arrayRoomsId.push(offer.userId);
+      controller
+        .getNotificationController()
+        .emitChangeOfferStatus(
+          offer.userId,
+          'Someone of yours offers was rejected',
+          contestId,
+          offer.userId
+        );
     }
   });
   controller
     .getNotificationController()
-    .emitChangeOfferStatus(
-      arrayRoomsId,
-      'Someone of yours offers was rejected',
-      contestId
-    );
-  controller
-    .getNotificationController()
-    .emitChangeOfferStatus(creatorId, 'Someone of your offers WIN', contestId);
+    .emitChangeOfferStatus(creatorId, 'Someone of your offers WIN', contestId, creatorId);
   return updatedOffers[0].dataValues;
 };
 
