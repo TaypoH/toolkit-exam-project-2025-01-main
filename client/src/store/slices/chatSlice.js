@@ -105,7 +105,12 @@ const sendMessageExtraReducers = createExtraReducers({
     };
     state.chatData = { ...state.chatData, ...chatData };
     state.messagesPreview = messagesPreview;
-    state.messages = [...state.messages, payload.message];
+    const exists = state.messages.some(
+      msg => (msg._id && msg._id === payload.message._id) || msg.createdAt === payload.message.createdAt
+    );
+    if (!exists) {
+      state.messages = [...state.messages, payload.message];
+    }
   },
   rejectedReducer: (state, { payload }) => {
     state.error = payload;
@@ -336,7 +341,12 @@ const reducers = {
       messagesPreview.push(preview);
     }
     state.messagesPreview = messagesPreview;
-    state.messages = [...state.messages, payload.message];
+    const exists = state.messages.some(
+      msg => (msg._id && msg._id === message._id) || msg.createdAt === message.createdAt
+    );
+    if (!exists) {
+      state.messages = [...state.messages, message];
+    }
   },
 
   backToDialogList: state => {

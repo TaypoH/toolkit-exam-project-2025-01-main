@@ -12,6 +12,7 @@ import ChatInput from '../../ChatComponents/ChatInut/ChatInput';
 
 class Dialog extends React.Component {
   componentDidMount () {
+    this.props.clearMessageList();
     this.props.getDialog({ interlocutorId: this.props.interlocutor.id });
     this.scrollToBottom();
   }
@@ -22,24 +23,23 @@ class Dialog extends React.Component {
     this.messagesEnd.current.scrollIntoView({ behavior: 'smooth' });
   };
 
-  componentWillReceiveProps (nextProps, nextContext) {
-    if (nextProps.interlocutor.id !== this.props.interlocutor.id)
-      this.props.getDialog({ interlocutorId: nextProps.interlocutor.id });
+  componentDidUpdate (prevProps) {
+    if (this.props.interlocutor.id !== prevProps.interlocutor.id) {
+      this.props.clearMessageList();
+      this.props.getDialog({ interlocutorId: this.props.interlocutor.id });
+    }
+    if (this.messagesEnd.current) this.scrollToBottom();
   }
 
   componentWillUnmount () {
     this.props.clearMessageList();
   }
 
-  componentDidUpdate () {
-    if (this.messagesEnd.current) this.scrollToBottom();
-  }
-
   renderMainDialog = () => {
     const messagesArray = [];
     const { messages, userId } = this.props;
     let currentTime = moment();
-    messages.forEach((message, i) => {
+    messages.forEach((message) => {
       if (!currentTime.isSame(message.createdAt, 'date')) {
         messagesArray.push(
           <div key={message.createdAt} className={styles.date}>
@@ -50,7 +50,7 @@ class Dialog extends React.Component {
       }
       messagesArray.push(
         <div
-          key={i}
+          key={message._id || message.createdAt}
           className={className(
             userId === message.sender ? styles.ownMessage : styles.message
           )}
