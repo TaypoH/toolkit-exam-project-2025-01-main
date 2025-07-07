@@ -5,6 +5,7 @@ import styles from './Header.module.sass';
 import CONSTANTS from '../../constants';
 import { clearUserStore } from '../../store/slices/userSlice';
 import { getUser } from '../../store/slices/userSlice';
+import { clearContestsList } from '../../store/slices/contestsSlice';
 import withRouter from '../../hocs/withRouter';
 import Logo from '../Logo';
 
@@ -22,6 +23,7 @@ class Header extends React.Component {
   logOut = () => {
     localStorage.clear();
     this.props.clearUserStore();
+    this.props.clearContestsList();
     this.props.navigate('/login', { replace: true });
   };
 
@@ -293,6 +295,7 @@ const mapStateToProps = state => state.userStore;
 const mapDispatchToProps = dispatch => ({
   getUser: () => dispatch(getUser()),
   clearUserStore: () => dispatch(clearUserStore()),
+  clearContestsList: () => dispatch(clearContestsList()),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Outlet } from 'react-router-dom';
 import { getUser, clearUserStore } from '../../../store/slices/userSlice';
+import { clearContestsList } from '../../../store/slices/contestsSlice';
 import Spinner from '../../Spinner/Spinner';
 import CONSTANTS from '../../../constants';
 
@@ -21,11 +22,13 @@ const OnlyNotAuthorizedUserRoute = () => {
         .catch(() => {
           localStorage.clear();
           dispatch(clearUserStore());
+          dispatch(clearContestsList());
         });
     } else {
       dispatch(clearUserStore());
+      dispatch(clearContestsList());
     }
-  }, []);
+  }, [dispatch, navigate]);
 
   if (isFetching) {
     return <Spinner />;

@@ -17,10 +17,14 @@ const initialState = {
 
 export const checkAuth = decorateAsyncThunk({
   key: `${AUTH_SLICE_NAME}/checkAuth`,
-  thunk: async ({ data: authInfo, navigate, authMode }) => {
+  thunk: async ({ data: authInfo, navigate, authMode }, { dispatch }) => {
     authMode === CONSTANTS.AUTH_MODE.LOGIN
       ? await restController.loginRequest(authInfo)
       : await restController.registerRequest(authInfo);
+
+    const { clearContestsList } = await import('./contestsSlice');
+    dispatch(clearContestsList());
+    
     navigate('/', { replace: true });
   },
 });
