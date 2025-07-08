@@ -21,7 +21,7 @@ export default [
         navigator: 'readonly',
         FormData: 'readonly',
         localStorage: 'readonly',
-
+        FileReader: 'readonly',
         describe: 'readonly',
         it: 'readonly',
         expect: 'readonly',
@@ -31,6 +31,15 @@ export default [
         test: 'readonly',
 
         React: 'writable',
+        File: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        setInterval: 'readonly',
+        clearInterval: 'readonly',
+        process: 'readonly',
+        URL: 'readonly',
+        console: 'readonly',
+        fetch: 'readonly',
       },
     },
     plugins: {

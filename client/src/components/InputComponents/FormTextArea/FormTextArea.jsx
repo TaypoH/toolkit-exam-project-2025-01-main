@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Field, ErrorMessage } from 'formik';
 
-const FormTextArea = ({ label, classes, type, ...rest }) => (
+const FormTextArea = ({ label, classes, ...rest }) => (
   <Field {...rest}>
     {props => {
       const {

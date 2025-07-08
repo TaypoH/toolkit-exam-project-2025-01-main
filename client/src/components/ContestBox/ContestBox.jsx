@@ -6,9 +6,11 @@ import CONSTANTS from '../../constants';
 const ContestBox = props => {
   const getTimeStr = () => {
     const diff = moment.duration(moment().diff(moment(props.data.createdAt)));
+    const days = Math.floor(diff.asDays());
+    const hours = diff.hours();
     let str = '';
-    if (diff._data.days !== 0) str = `${diff._data.days}d `;
-    if (diff._data.hours !== 0) str += `${diff._data.hours}h`;
+    if (days !== 0) str = `${days}d `;
+    if (hours !== 0) str += `${hours}h`;
     if (str.length === 0) str = 'less than one hour';
     return str;
   };
@@ -23,7 +25,7 @@ const ContestBox = props => {
   const ucFirstLetter = string =>
     string.charAt(0).toUpperCase() + string.slice(1);
 
-  const { id, title, contestType, prize, count, goToExtended } = props.data;
+  const { id, title, contestType, prize, count } = props.data;
   return (
     <div
       className={styles.contestBoxContainer}

@@ -1,6 +1,7 @@
+/* eslint-disable import/no-unresolved */
 import { defineConfig, transformWithEsbuild } from 'vite';
 import react from '@vitejs/plugin-react';
-import browserslistToEsbuild from 'browserslist-to-esbuild';
+import browserslistToEsbuild from 'browserslist-to-esbuild/index.js';
 
 export default defineConfig({
   plugins: [

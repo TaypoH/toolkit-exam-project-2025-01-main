@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import './index.css';
+import Modal from 'react-modal';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
 import App from './App';
-import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 Modal.defaultProps.ariaHideApp = false;

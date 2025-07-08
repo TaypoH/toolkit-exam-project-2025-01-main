@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Header from '../../components/Header/Header';
 import CONSTANTS from '../../constants';
 import SlideBar from '../../components/SlideBar/SlideBar';
-import Footer from '../../components/Footer/Footer';
 import styles from './Home.module.sass';
 import carouselConstants from '../../carouselConstants';
 import Spinner from '../../components/Spinner/Spinner';
@@ -12,18 +10,18 @@ import Spinner from '../../components/Spinner/Spinner';
 const Home = props => {
   const [index, setIndex] = useState(0);
   const [styleName, setStyle] = useState(styles.headline__static);
-  let timeout;
+  const timeout = useRef();
 
   useEffect(() => {
-    timeout = setInterval(() => {
-      setIndex(index + 1);
+    timeout.current = setInterval(() => {
+      setIndex(prevIndex => prevIndex + 1);
       setStyle(styles.headline__isloading);
     }, 3000);
     return () => {
       setStyle(styles.headline__static);
-      clearInterval(timeout);
+      clearInterval(timeout.current);
     };
-  });
+  }, []);
 
   const { isFetching } = props;
   const text =
@@ -44,7 +42,7 @@ const Home = props => {
               </div>
               <p>
                 Launch a naming contest to engage hundreds of naming experts as
-                you’re guided through our agency-level naming process. Or,
+                you're guided through our agency-level naming process. Or,
                 explore our hand-picked collection of premium names available
                 for immediate purchase
               </p>
@@ -169,7 +167,7 @@ const Home = props => {
                   <p>
                     <i className='fas fa-check' />
                     <span>
-                      We’ll walk you through exactly what you need to share
+                      We'll walk you through exactly what you need to share
                       about your project in order to get an awesome Name
                     </span>
                   </p>

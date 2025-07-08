@@ -10,8 +10,8 @@ const ContestSideBar = props => {
       moment().diff(moment(props.contestData.createdAt))
     );
     let str = '';
-    if (diff._data.days !== 0) str = `${diff._data.days} days `;
-    if (diff._data.hours !== 0) str += `${diff._data.hours} hours`;
+    if (diff.days() !== 0) str = `${diff.days()} days `;
+    if (diff.hours() !== 0) str += `${diff.hours()} hours`;
     if (str.length === 0) str = 'less than one hour';
     return str;
   };
