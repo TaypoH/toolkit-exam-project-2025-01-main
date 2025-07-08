@@ -149,7 +149,8 @@ const rejectOffer = async (offerId, creatorId, contestId) => {
     .emitChangeOfferStatus(
       creatorId,
       'Someone of yours offers was rejected',
-      contestId
+      contestId,
+      creatorId
     );
   return rejectedOffer;
 };
@@ -193,7 +194,6 @@ const resolveOffer = async (
     transaction
   );
   transaction.commit();
-  const arrayRoomsId = [];
   updatedOffers.forEach(offer => {
     if (
       offer.status === CONSTANTS.OFFER_STATUS_REJECTED &&
@@ -284,7 +284,7 @@ module.exports.getCustomersContests = (req, res, next) => {
 };
 
 module.exports.getContests = (req, res, next) => {
-  let predicates = UtilFunctions.createWhereForAllContests(
+  const predicates = UtilFunctions.createWhereForAllContests(
     req.body.typeIndex,
     req.body.contestId,
     req.body.industry,
