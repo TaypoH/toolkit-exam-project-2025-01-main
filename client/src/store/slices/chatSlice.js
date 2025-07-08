@@ -29,7 +29,6 @@ const initialState = {
   catalogCreationMode: CONSTANTS.ADD_CHAT_TO_OLD_CATALOG,
 };
 
-//---------- getPreviewChat
 export const getPreviewChat = decorateAsyncThunk({
   key: `${CHAT_SLICE_NAME}/getPreviewChat`,
   thunk: async () => {
@@ -50,7 +49,6 @@ const getPreviewChatExtraReducers = createExtraReducers({
   },
 });
 
-//---------- getDialogMessages
 export const getDialogMessages = decorateAsyncThunk({
   key: `${CHAT_SLICE_NAME}/getDialogMessages`,
   thunk: async payload => {
@@ -72,7 +70,6 @@ const getDialogMessagesExtraReducers = createExtraReducers({
   },
 });
 
-//---------- sendMessage
 export const sendMessage = decorateAsyncThunk({
   key: `${CHAT_SLICE_NAME}/sendMessage`,
   thunk: async payload => {
@@ -117,7 +114,6 @@ const sendMessageExtraReducers = createExtraReducers({
   },
 });
 
-//---------- changeChatFavorite
 export const changeChatFavorite = decorateAsyncThunk({
   key: `${CHAT_SLICE_NAME}/changeChatFavorite`,
   thunk: async payload => {
@@ -142,7 +138,6 @@ const changeChatFavoriteExtraReducers = createExtraReducers({
   },
 });
 
-//---------- changeChatBlock
 export const changeChatBlock = decorateAsyncThunk({
   key: `${CHAT_SLICE_NAME}/changeChatBlock`,
   thunk: async payload => {
@@ -167,7 +162,6 @@ const changeChatBlockExtraReducers = createExtraReducers({
   },
 });
 
-//---------- getCatalogList
 export const getCatalogList = decorateAsyncThunk({
   key: `${CHAT_SLICE_NAME}/getCatalogList`,
   thunk: async payload => {
@@ -185,7 +179,6 @@ const getCatalogListExtraReducers = createExtraReducers({
   rejectedReducer,
 });
 
-//---------- addChatToCatalog
 export const addChatToCatalog = decorateAsyncThunk({
   key: `${CHAT_SLICE_NAME}/addChatToCatalog`,
   thunk: async payload => {
@@ -213,7 +206,6 @@ const addChatToCatalogExtraReducers = createExtraReducers({
   },
 });
 
-//---------- createCatalog
 export const createCatalog = decorateAsyncThunk({
   key: `${CHAT_SLICE_NAME}/createCatalog`,
   thunk: async payload => {
@@ -234,7 +226,6 @@ const createCatalogExtraReducers = createExtraReducers({
   },
 });
 
-//---------- deleteCatalog
 export const deleteCatalog = decorateAsyncThunk({
   key: `${CHAT_SLICE_NAME}/deleteCatalog`,
   thunk: async payload => {
@@ -258,7 +249,6 @@ const deleteCatalogExtraReducers = createExtraReducers({
   },
 });
 
-//---------- removeChatFromCatalog
 export const removeChatFromCatalog = decorateAsyncThunk({
   key: `${CHAT_SLICE_NAME}/removeChatFromCatalog`,
   thunk: async payload => {
@@ -285,7 +275,6 @@ const removeChatFromCatalogExtraReducers = createExtraReducers({
   },
 });
 
-//---------- changeCatalogName
 export const changeCatalogName = decorateAsyncThunk({
   key: `${CHAT_SLICE_NAME}/changeCatalogName`,
   thunk: async payload => {
@@ -312,7 +301,6 @@ const changeCatalogNameExtraReducers = createExtraReducers({
     state.isRenameCatalog = false;
   },
 });
-//-------------------------------------------------------
 
 const reducers = {
   changeBlockStatusInStore: (state, { payload }) => {
