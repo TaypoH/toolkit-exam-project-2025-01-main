@@ -1,0 +1,107 @@
+.faqItemOpen
+  background: #377dff
+  border-radius: 24px
+  box-shadow: 0 4px 24px rgba(55,125,255,0.10)
+  margin-bottom: 24px
+  overflow: hidden
+
+.faqQuestion
+  width: 100%
+  background: transparent
+  border: none
+  border-radius: 24px 24px 0 0
+  padding: 24px 32px 0 32px
+  font-size: 1.25rem
+  font-weight: 700
+  color: #fff
+  text-align: left
+  display: flex
+  align-items: center
+  justify-content: space-between
+  cursor: pointer
+  box-shadow: none
+  margin-bottom: 20px
+  position: relative
+
+.faqIcon
+  font-size: 1.5rem
+  margin-left: 16px
+  font-weight: 700
+
+.faqAnswer
+  background: transparent
+  color: #fff
+  border-radius: 0 0 24px 24px
+  padding: 12px 32px 24px 32px
+  font-size: 1.08rem
+  box-shadow: none
+  margin-top: 0
+  margin-bottom: 0
+  line-height: 1.7
+  p, ul, ol
+    margin-bottom: 12px
+  ul, ol
+    padding-left: 22px
+  li
+    margin-bottom: 6px
+
+.faqAnswer a
+  color: #fff
+  font-weight: 700
+  text-decoration: underline
+
+.faqItemClosed
+  background: #fff
+  border-radius: 24px
+  border: 1.5px solid #f0f1fa
+  box-shadow: none
+  margin-bottom: 28px
+  transition: box-shadow 0.2s, border-color 0.2s
+  &:hover
+    box-shadow: 0 4px 24px rgba(55,125,255,0.10)
+    border: 1px solid #307DF6
+    background-color: rgba(48, 125, 246, .1)
+
+.faqQuestionClosed
+  width: 100%
+  background: transparent
+  border: none
+  border-radius: 24px
+  padding: 24px 32px
+  font-size: 1.25rem
+  font-weight: 700
+  color: #19184A
+  text-align: left
+  display: flex
+  align-items: center
+  justify-content: space-between
+  cursor: pointer
+  box-shadow: none
+  margin-bottom: 0
+  position: relative
+
+.faqIconClosed
+  color: #377dff
+  font-size: 1.5rem
+  margin-left: 16px
+  font-weight: 700
+
+.faqAnswerInner
+  max-height: 0
+  opacity: 0
+  overflow: hidden
+  padding-top: 0
+  padding-bottom: 0
+  transition: max-height 0.7s cubic-bezier(0.4,0,0.2,1), opacity 0.5s, padding 0.7s cubic-bezier(0.4,0,0.2,1)
+
+.faqAnswerInnerOpen
+  max-height: 500px
+  opacity: 1
+  padding-top: 12px
+  padding-bottom: 24px
+
+.faqAnswerInnerClosed
+  max-height: 0
+  opacity: 0
+  padding-top: 0
+  padding-bottom: 0 

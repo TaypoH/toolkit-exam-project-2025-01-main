@@ -51,12 +51,18 @@ export default {
   FooterItems: [
     {
       title: 'SQUADHELP',
-      items: ['About', 'Contact', 'How It Works?', 'Testimonials', 'Our Work'],
+      items: [
+        'About',
+        'Contact',
+        { label: 'How It Works?', href: '/how-it-works' },
+        'Testimonials',
+        'Our Work',
+      ],
     },
     {
       title: 'RESOURCES',
       items: [
-        'How It Works',
+        { label: 'How It Works', href: '/how-it-works' },
         'Become a Creative',
         'Business Name Generator',
         'Discussion Forum',

@@ -1,0 +1,88 @@
+.serviceCard
+  background: #fff
+  border-radius: 24px
+  box-shadow: 0 8px 32px rgba(24,28,50,0.08)
+  padding: 25px
+  display: flex
+  flex-direction: column
+  align-items: flex-start
+  max-width: 350px
+  flex: 1
+  width: 100%
+  box-sizing: border-box
+  h3
+    font-size: 1.32rem
+    font-weight: 800
+    margin-bottom: 18px
+    color: #181c32
+    line-height: 1.15
+    text-align: left
+  p
+    font-size: 1.08rem
+    color: #6b7280
+    margin-bottom: 48px
+    min-height: 60px
+    line-height: 1.5
+    text-align: left
+  .cardButton
+    text-align: left
+  @media (max-width: 900px)
+    align-items: center
+    text-align: center
+    max-width: 100%
+    width: 100%
+    h3, p, .cardButton
+      text-align: center
+  @media (max-width: 600px)
+    padding: 20px 16px
+  &:hover
+    box-shadow: 0 16px 48px rgba(74,157,248,0.16)
+  .cardIcon
+    margin-bottom: 4px
+  .cardButton
+    margin-top: auto
+    display: flex
+    align-items: center
+    justify-content: center
+    background: #3b82f6
+    color: #fff
+    font-weight: 700
+    padding: 16px 0
+    border-radius: 8px
+    text-decoration: none
+    font-size: 1.08rem
+    width: 100%
+    max-width: 260px
+    transition: background 0.2s
+    gap: 8px
+    letter-spacing: 0.01em
+    &:hover
+      background: #2563eb
+    svg
+      width: 16px
+      height: 16px
+      margin-left: 4px
+
+.cardIcon
+  width: 56px
+  height: 56px
+  margin-bottom: 32px
+  display: block
+  @media (max-width: 900px)
+    margin-left: auto
+    margin-right: auto
+
+.cardButton
+  margin-top: 24px
+  display: inline-block
+  background: #3b82f6
+  color: #fff
+  font-weight: 700
+  padding: 16px 32px
+  border-radius: 32px
+  text-decoration: none
+  font-size: 1.08rem
+  transition: background 0.2s
+  letter-spacing: 0.01em
+  &:hover
+    background: #2563eb 

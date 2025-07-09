@@ -7,9 +7,15 @@ class Footer extends Component {
     <div key={item.title}>
       <h4>{item.title}</h4>
       {item.items.map(i => (
-        <a key={i} href='https://google.com'>
-          {i}
-        </a>
+        typeof i === 'object' && i.label && i.href ? (
+          <a key={i.label} href={i.href}>
+            {i.label}
+          </a>
+        ) : (
+          <a key={i} href='https://google.com'>
+            {i}
+          </a>
+        )
       ))}
     </div>
   );

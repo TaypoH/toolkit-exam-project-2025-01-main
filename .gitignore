@@ -13,3 +13,4 @@
 *server/public/*
 
 /var/www/html/images/
+.DS_Store
