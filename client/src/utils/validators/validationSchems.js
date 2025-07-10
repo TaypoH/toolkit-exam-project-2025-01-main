@@ -198,12 +198,27 @@ export default {
   MessageSchema: yup.object({
     message: yup
       .string()
-      .test(
-        'test-message',
-        'required',
-        value => value && value.trim().length >= 1
-      )
-      .required('required'),
+      .required('Message is required'),
+  }),
+  EventFormSchema: yup.object().shape({
+    name: yup.string().required('Event name is required'),
+    date: yup.string()
+      .required('Date and time are required')
+      .test('is-future', 'Date must be in the future', value => {
+        if (!value) return false;
+        return new Date(value) > new Date();
+      }),
+    notifyBefore: yup.number()
+      .min(0, 'Cannot be less than 0')
+      .required('Notification time is required')
+      .test('notify-valid', 'Notify before must be less than time to event', function(value) {
+        const { date } = this.parent;
+        if (!date || value == null) return true;
+        const eventDate = new Date(date);
+        const now = new Date();
+        const diffMinutes = (eventDate - now) / 60000;
+        return value <= diffMinutes;
+      }),
   }),
   CatalogSchema: yup.object({
     catalogName: yup

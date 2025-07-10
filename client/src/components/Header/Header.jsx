@@ -9,6 +9,57 @@ import { clearContestsList } from '../../store/slices/contestsSlice';
 import { resetChat } from '../../store/slices/chatSlice';
 import withRouter from '../../hocs/withRouter';
 import Logo from '../Logo';
+import { useEffect, useState } from 'react';
+
+function getEventsBadgeCount() {
+  const LOCAL_STORAGE_KEY = 'events-list';
+  const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (!stored) return 0;
+  let notifiedIds = [];
+  try {
+    notifiedIds = JSON.parse(localStorage.getItem('events-notified-ids') || '[]');
+  } catch { notifiedIds = []; }
+  try {
+    const events = JSON.parse(stored);
+    // Считаем все события, для которых когда-либо было notifyTime
+    return events.filter(event => {
+      const eventDate = new Date(event.date);
+      const notifyBeforeMs = (event.notifyBefore || 0) * 60 * 1000;
+      const wasNotify = eventDate.getTime() - notifyBeforeMs <= Date.now();
+      const isNew = !notifiedIds.includes(event.id);
+      return wasNotify && isNew;
+    }).length;
+  } catch {
+    return 0;
+  }
+}
+
+function EventsMenuBadge() {
+  const [count, setCount] = useState(getEventsBadgeCount());
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount(getEventsBadgeCount());
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+  if (!count) return null;
+  return (
+    <span style={{
+      background: '#CD5C5C',
+      color: '#fff',
+      borderRadius: '50%',
+      padding: '2px 8px',
+      fontSize: 12,
+      fontWeight: 700,
+      marginLeft: 6,
+      verticalAlign: 'middle',
+      lineHeight: '18px',
+      display: 'inline-block',
+      minWidth: 18,
+      textAlign: 'center',
+    }}>{count}</span>
+  );
+}
 
 class Header extends React.Component {
   componentDidMount () {
@@ -275,6 +326,12 @@ class Header extends React.Component {
                       <a href='http://www.google.com'>ALL ARTICLES</a>
                     </li>
                   </ul>
+                </li>
+                <li>
+                  <Link to='/events' style={{ textDecoration: 'none' }}>
+                    <span>EVENTS</span>
+                    <EventsMenuBadge />
+                  </Link>
                 </li>
               </ul>
             </div>
