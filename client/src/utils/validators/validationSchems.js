@@ -96,6 +96,7 @@ export default {
     typeOfTagline: yup.string().min(1),
     brandStyle: yup.string().min(1),
     file: yup.mixed(),
+    domainPreference: yup.string(),
   }),
   filterSchem: yup.object().shape({
     typeIndex: yup.number().oneOf([1, 2, 3, 4, 5, 6, 7]),
@@ -196,29 +197,33 @@ export default {
     file: yup.mixed(),
   }),
   MessageSchema: yup.object({
-    message: yup
-      .string()
-      .required('Message is required'),
+    message: yup.string().required('Message is required'),
   }),
   EventFormSchema: yup.object().shape({
     name: yup.string().required('Event name is required'),
-    date: yup.string()
+    date: yup
+      .string()
       .required('Date and time are required')
       .test('is-future', 'Date must be in the future', value => {
         if (!value) return false;
         return new Date(value) > new Date();
       }),
-    notifyBefore: yup.number()
+    notifyBefore: yup
+      .number()
       .min(0, 'Cannot be less than 0')
       .required('Notification time is required')
-      .test('notify-valid', 'Notify before must be less than time to event', function(value) {
-        const { date } = this.parent;
-        if (!date || value == null) return true;
-        const eventDate = new Date(date);
-        const now = new Date();
-        const diffMinutes = (eventDate - now) / 60000;
-        return value <= diffMinutes;
-      }),
+      .test(
+        'notify-valid',
+        'Notify before must be less than time to event',
+        function (value) {
+          const { date } = this.parent;
+          if (!date || value == null) return true;
+          const eventDate = new Date(date);
+          const now = new Date();
+          const diffMinutes = (eventDate - now) / 60000;
+          return value <= diffMinutes;
+        }
+      ),
   }),
   CatalogSchema: yup.object({
     catalogName: yup

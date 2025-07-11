@@ -16,6 +16,12 @@ const ContestCreationPage = props => {
   const formRef = useRef();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!props.bundleStore.bundle) {
+      navigate('/startContest', { replace: true });
+    }
+  }, [props.bundleStore.bundle, navigate]);
+
   const contestData = props.contestCreationStore.contests[props.contestType]
     ? props.contestCreationStore.contests[props.contestType]
     : { contestType: props.contestType };
@@ -43,8 +49,6 @@ const ContestCreationPage = props => {
       formRef.current.handleSubmit();
     }
   };
-
-  !props.bundleStore.bundle && navigate('/startContest', { replace: true });
 
   return (
     <div>
