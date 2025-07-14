@@ -5,15 +5,16 @@
 
 const fs = require('fs').promises;
 const path = require('path');
+const CONSTANTS = require('../constants');
 
-const logsDir = path.join(__dirname, '../../logs');
-const sourceLog = path.join(logsDir, 'error.log');
+const logsDir = path.join(__dirname, '../../', CONSTANTS.LOGS_DIR);
+const sourceLog = path.join(logsDir, CONSTANTS.ERROR_LOG_FILE);
 const archiveLog = path.join(
   logsDir,
-  `error-${new Date().toISOString().slice(0, 10)}.log`
+  `${CONSTANTS.ARCHIVE_LOG_PREFIX}${new Date().toISOString().slice(0, 10)}${CONSTANTS.ARCHIVE_LOG_EXT}`
 );
 
-async function archiveLogs () {
+async function archiveLogs() {
   try {
     const data = await fs.readFile(sourceLog, 'utf8');
     if (!data.trim()) return;
