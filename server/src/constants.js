@@ -29,4 +29,8 @@ module.exports = {
   NEW_MESSAGE: 'newMessage',
   CHANGE_BLOCK_STATUS: 'CHANGE_BLOCK_STATUS',
   IMAGES_BASE_PATH: '/var/www/html/images',
+  LOGS_DIR: 'logs',
+  ERROR_LOG_FILE: 'error.log',
+  ARCHIVE_LOG_PREFIX: 'error-',
+  ARCHIVE_LOG_EXT: '.log',
 };
