@@ -11,6 +11,7 @@
 .server/public/images
 **server/public/*
 *server/public/*
+server/logs/
 
 /var/www/html/images/
 .DS_Store

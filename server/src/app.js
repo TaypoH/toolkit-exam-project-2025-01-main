@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const router = require('./router');
-const handlerError = require('./handlerError/handler');
+const handlerError = require('./middlewares/errorHandler');
 const { IMAGES_BASE_PATH } = require('./constants');
 
 const app = express();
