@@ -9,6 +9,7 @@ module.exports = {
   CUSTOMER: 'customer',
   CREATOR: 'creator',
   CREATOR_ENTRIES: 'creator_entries',
+  MODERATOR: 'moderator',
   CONTEST_STATUS_ACTIVE: 'active',
   CONTEST_STATUS_FINISHED: 'finished',
   CONTEST_STATUS_PENDING: 'pending',
