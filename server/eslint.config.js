@@ -12,6 +12,7 @@ export default [
         module: 'readonly',
         require: 'readonly',
         console: 'readonly',
+        Sequelize: 'readonly',
       },
     },
     rules: {
