@@ -1,11 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
-import InputMask from 'react-input-mask';
+import { IMaskInput } from 'react-imask';
 import { useField } from 'formik';
 
 const PayInput = props => {
   const { label, changeFocus, classes, isInputMask, mask, autocomplete } = props;
-  const [field, meta] = useField(props.name);
+  const [field, meta, helpers] = useField(props.name);
   const { touched, error } = meta;
 
   if (field.name === 'sum') {
@@ -29,10 +29,11 @@ const PayInput = props => {
   if (isInputMask) {
     return (
       <div className={classes.container}>
-        <InputMask
+        <IMaskInput
           mask={mask}
-          maskChar={null}
-          {...field}
+          unmask={false}
+          name={field.name}
+          id={field.name}
           value={field.value || ''}
           autoComplete={autocomplete}
           placeholder={label}
@@ -40,6 +41,10 @@ const PayInput = props => {
             [classes.notValid]: touched && error,
           })}
           onFocus={() => changeFocus(field.name)}
+          onAccept={(value) => {
+            helpers.setValue(value);
+          }}
+          onBlur={field.onBlur}
         />
         {touched && error && (
           <span className={classes.error}>{error.message}!</span>

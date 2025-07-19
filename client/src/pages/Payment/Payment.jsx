@@ -13,6 +13,10 @@ const Payment = props => {
   const { contests } = props.contestCreationStore;
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (isEmpty(contests)) {
       navigate('/startContest', { replace: true });
     }

@@ -84,7 +84,7 @@ const PayForm = props => {
                   <span>Card Number</span>
                   <PayInput
                     isInputMask
-                    mask='9999 9999 9999 9999 999'
+                    mask='0000 0000 0000 0000 000'
                     name='number'
                     autocomplete='cc-number'
                     classes={{
@@ -103,7 +103,7 @@ const PayForm = props => {
                     <span>* Expires</span>
                     <PayInput
                       isInputMask
-                      mask='99/99'
+                      mask='00/00'
                       name='expiry'
                       autocomplete='cc-exp'
                       classes={{
@@ -121,7 +121,7 @@ const PayForm = props => {
                     <span>* Security Code</span>
                     <PayInput
                       isInputMask
-                      mask='9999'
+                      mask='0000'
                       name='cvc'
                       autocomplete='cc-csc'
                       classes={{
