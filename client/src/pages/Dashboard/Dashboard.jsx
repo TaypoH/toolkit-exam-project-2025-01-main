@@ -14,6 +14,15 @@ const Dashboard = () => {
   const params = useParams();
 
   const { role } = useSelector(state => state.userStore.data);
+
+  useEffect(() => {
+    if (role === 'moderator') {
+      navigate('/', { replace: true });
+    }
+  }, [role, navigate]);
+
+  if (role === 'moderator') return null;
+
   return role === CONSTANTS.CUSTOMER ? (
     <CustomerDashboard navigate={navigate} params={params} />
   ) : (
