@@ -40,12 +40,21 @@ class ContestPage extends React.Component {
   };
 
   setOffersList = () => {
+    const { role } = this.props.userStore.data;
+    let offers = this.props.contestByIdStore.offers;
+    if (role === CONSTANTS.CUSTOMER) {
+      offers = offers.filter(
+        offer =>
+          offer.status === CONSTANTS.OFFER_STATUS_APPROVED ||
+          offer.status === CONSTANTS.OFFER_STATUS_WON
+      );
+    }
     const array = [];
-    for (let i = 0; i < this.props.contestByIdStore.offers.length; i++) {
+    for (let i = 0; i < offers.length; i++) {
       array.push(
         <OfferBox
-          data={this.props.contestByIdStore.offers[i]}
-          key={this.props.contestByIdStore.offers[i].id}
+          data={offers[i]}
+          key={offers[i].id}
           needButtons={this.needButtons}
           setOfferStatus={this.setOfferStatus}
           contestType={this.props.contestByIdStore.contestData.contestType}
@@ -69,7 +78,7 @@ class ContestPage extends React.Component {
     return (
       contestCreatorId === userId &&
       contestStatus === CONSTANTS.CONTEST_STATUS_ACTIVE &&
-      offerStatus === CONSTANTS.OFFER_STATUS_PENDING
+      offerStatus === CONSTANTS.OFFER_STATUS_APPROVED
     );
   };
 
@@ -204,7 +213,15 @@ class ContestPage extends React.Component {
             </div>
             <ContestSideBar
               contestData={contestData}
-              totalEntries={offers.length}
+              totalEntries={
+                role === CONSTANTS.CUSTOMER
+                  ? offers.filter(
+                      offer =>
+                        offer.status === CONSTANTS.OFFER_STATUS_APPROVED ||
+                        offer.status === CONSTANTS.OFFER_STATUS_WON
+                    ).length
+                  : offers.length
+              }
             />
           </div>
         )}

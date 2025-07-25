@@ -47,10 +47,18 @@ class CustomerDashboard extends React.Component {
     const array = [];
     const { contests } = this.props;
     for (let i = 0; i < contests.length; i++) {
+      const approvedCount = contests[i].Offers
+        ? contests[i].Offers.filter(
+            offer =>
+              offer.status === CONSTANTS.OFFER_STATUS_APPROVED ||
+              offer.status === CONSTANTS.OFFER_STATUS_WON
+          ).length
+        : contests[i].count;
+      const contestData = { ...contests[i], count: approvedCount };
       array.push(
         <ContestBox
-          data={contests[i]}
-          key={contests[i].id}
+          data={contestData}
+          key={contestData.id}
           goToExtended={this.goToExtended}
         />
       );
