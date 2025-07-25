@@ -22,6 +22,7 @@ import OnlyNotAuthorizedUserRoute from './components/Routes/OnlyNotAuthorizedUse
 import PrivateRoute from './components/Routes/PrivateRoute/PrivateRoute';
 import HowItWorks from './pages/HowItWorks/HowItWorks';
 import Events from './pages/Events/Events';
+import ModeratorPage from './pages/Moderator/ModeratorPage';
 
 class App extends Component {
   render () {
@@ -41,7 +42,7 @@ class App extends Component {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="how-it-works" element={<HowItWorks />} />
+            <Route path='how-it-works' element={<HowItWorks />} />
             <Route path='/events' element={<Events />} />
 
             <Route element={<OnlyNotAuthorizedUserRoute />}>
@@ -82,6 +83,7 @@ class App extends Component {
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/contest/:id' element={<ContestPage />} />
               <Route path='/account' element={<UserProfile />} />
+              <Route path='/offersReview' element={<ModeratorPage />} />
             </Route>
             <Route path='*' element={<NotFound />} />
           </Route>

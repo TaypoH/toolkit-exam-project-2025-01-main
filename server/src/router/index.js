@@ -8,6 +8,7 @@ const validators = require('../middlewares/validators');
 const chatController = require('../controllers/chatController');
 const upload = require('../utils/fileUpload');
 const contestsRouter = require('./contestsRouter');
+const moderatorController = require('../controllers/moderatorController');
 const router = express.Router();
 
 router.post(
@@ -89,5 +90,23 @@ router.post('/removeChatFromCatalog', chatController.removeChatFromCatalog);
 router.post('/deleteCatalog', chatController.deleteCatalog);
 
 router.post('/getCatalogs', chatController.getCatalogs);
+
+router.get(
+  '/moderator/offers',
+  basicMiddlewares.onlyForModerator,
+  moderatorController.getAllOffers
+);
+
+router.post(
+  '/moderator/offers/:offerId/approve',
+  basicMiddlewares.onlyForModerator,
+  moderatorController.approveOffer
+);
+
+router.post(
+  '/moderator/offers/:offerId/reject',
+  basicMiddlewares.onlyForModerator,
+  moderatorController.rejectOffer
+);
 
 module.exports = router;

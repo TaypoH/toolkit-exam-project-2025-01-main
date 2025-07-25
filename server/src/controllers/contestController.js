@@ -258,7 +258,7 @@ module.exports.getCustomersContests = (req, res, next) => {
       {
         model: db.Offers,
         required: false,
-        attributes: ['id'],
+        attributes: ['id', 'status'],
       },
     ],
   })

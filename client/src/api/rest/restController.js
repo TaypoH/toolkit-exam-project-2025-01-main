@@ -51,5 +51,14 @@ export const getActiveContests = ({
     onlyActive,
   });
 
-export const getContestById = ({contestId}) =>
+export const getContestById = ({ contestId }) =>
   http.get(`contests/${contestId}`);
+
+export const getModeratorOffers = data =>
+  http.get(`moderator/offers?${queryString.stringify(data)}`);
+
+export const approveOffer = data =>
+  http.post(`moderator/offers/${data}/approve`);
+
+export const rejectOffer = data =>
+  http.post(`moderator/offers/${data}/reject`);
