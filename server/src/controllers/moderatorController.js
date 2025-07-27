@@ -1,34 +1,82 @@
 const db = require('../models');
 const ServerError = require('../errors/ServerError');
 const CONSTANTS = require('../constants');
+const { sendModerationNotification } = require('../utils/emailService');
 
 function isValidId (id) {
   return Number.isInteger(Number(id)) && Number(id) > 0;
 }
 
-async function findOfferById (offerId, transaction) {
+const getOfferWithDetails = async (offerId, transaction) => {
   const offer = await db.Offers.findOne({
     where: { id: offerId },
+    include: [
+      {
+        model: db.Users,
+        attributes: ['email', 'firstName', 'lastName'],
+      },
+      {
+        model: db.Contests,
+        attributes: ['title'],
+      },
+    ],
     transaction,
   });
-  if (!offer) throw new ServerError('Offer not found');
-  return offer;
-}
 
-// Get all offers (with pagination)
+  if (!offer) {
+    throw new ServerError('Offer not found');
+  }
+
+  return offer;
+};
+
+const processOfferModeration = async (offerId, decision, res, next) => {
+  const transaction = await db.sequelize.transaction();
+
+  try {
+    if (!isValidId(offerId)) throw new ServerError('Invalid offerId');
+
+    const offer = await getOfferWithDetails(offerId, transaction);
+    const { User, Contest } = offer;
+    const userName = `${User.firstName} ${User.lastName}`;
+
+    const statusMap = {
+      approved: CONSTANTS.OFFER_STATUS_APPROVED,
+      rejected: CONSTANTS.OFFER_STATUS_REJECTED,
+    };
+
+    await db.Offers.update(
+      { status: statusMap[decision] },
+      { where: { id: offerId }, transaction }
+    );
+
+    await sendModerationNotification({
+      userEmail: User.email,
+      userName,
+      offerId,
+      decision,
+      contestTitle: Contest.title,
+    });
+
+    await transaction.commit();
+    res.send({ success: true });
+  } catch (err) {
+    await transaction.rollback();
+    next(new ServerError(err.message || err));
+  }
+};
+
 module.exports.getAllOffers = async (req, res, next) => {
   try {
-    const limit = parseInt(req.query.limit) || 20;
-    const offset = parseInt(req.query.offset) || 0;
+    const { limit = 20, offset = 0 } = req.query;
     const { count, rows } = await db.Offers.findAndCountAll({
       where: { status: CONSTANTS.OFFER_STATUS_PENDING },
-      limit,
-      offset,
+      limit: parseInt(limit),
+      offset: parseInt(offset),
       order: [['id', 'DESC']],
       include: [
         {
           model: db.Contests,
-          // attributes: ['id', 'title'],
           attributes: ['id', 'title', 'industry', 'styleName', 'brandStyle'],
         },
       ],
@@ -39,39 +87,12 @@ module.exports.getAllOffers = async (req, res, next) => {
   }
 };
 
-// Approve offer
 module.exports.approveOffer = async (req, res, next) => {
-  const transaction = await db.sequelize.transaction();
-  try {
-    const offerId = req.params.offerId;
-    if (!isValidId(offerId)) throw new ServerError('Invalid offerId');
-    // Только выбранный оффер становится approved
-    await db.Offers.update(
-      { status: CONSTANTS.OFFER_STATUS_APPROVED },
-      { where: { id: offerId }, transaction }
-    );
-    // TODO: send email to offer creator (offer.userId)
-    await transaction.commit();
-    res.send({ success: true });
-  } catch (err) {
-    await transaction.rollback();
-    next(new ServerError(err.message || err));
-  }
+  const { offerId } = req.params;
+  await processOfferModeration(offerId, 'approved', res, next);
 };
 
-// Reject offer
 module.exports.rejectOffer = async (req, res, next) => {
-  try {
-    const offerId = req.params.offerId;
-    if (!isValidId(offerId)) throw new ServerError('Invalid offerId');
-    const offer = await findOfferById(offerId);
-    await db.Offers.update(
-      { status: CONSTANTS.OFFER_STATUS_REJECTED },
-      { where: { id: offerId } }
-    );
-    // TODO: send email to offer creator (offer.userId)
-    res.send({ success: true });
-  } catch (err) {
-    next(new ServerError(err.message || err));
-  }
+  const { offerId } = req.params;
+  await processOfferModeration(offerId, 'rejected', res, next);
 };
