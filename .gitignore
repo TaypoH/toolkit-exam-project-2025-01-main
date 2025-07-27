@@ -15,3 +15,5 @@ server/logs/
 
 /var/www/html/images/
 .DS_Store
+
+server/.env
