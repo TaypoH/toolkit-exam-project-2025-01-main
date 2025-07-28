@@ -13,8 +13,9 @@ class CatalogListContainer extends React.Component {
   }
 
   removeChatFromCatalog = (event, chatId) => {
-    const { _id } = this.props.chatStore.currentCatalog;
-    this.props.removeChatFromCatalog({ chatId, catalogId: _id });
+    const { _id, id } = this.props.chatStore.currentCatalog;
+    const catalogId = id || _id;
+    this.props.removeChatFromCatalog({ chatId, catalogId });
     event.stopPropagation();
   };
 
@@ -24,7 +25,7 @@ class CatalogListContainer extends React.Component {
     const dialogsInCatalog = [];
     for (let i = 0; i < messagesPreview.length; i++) {
       for (let j = 0; j < chats.length; j++) {
-        if (chats[j] === messagesPreview[i]._id) {
+        if (chats[j] === (messagesPreview[i].id || messagesPreview[i]._id)) {
           dialogsInCatalog.push(messagesPreview[i]);
         }
       }

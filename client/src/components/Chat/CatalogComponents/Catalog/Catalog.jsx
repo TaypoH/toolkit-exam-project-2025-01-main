@@ -3,7 +3,8 @@ import styles from './Catalog.module.sass';
 
 const Catalog = props => {
   const { deleteCatalog, goToCatalog } = props;
-  const { catalogName, chats, _id } = props.catalog;
+  const { catalogName, chats, _id, id } = props.catalog;
+  const catalogId = id || _id;
   return (
     <div
       className={styles.catalogContainer}
@@ -15,7 +16,7 @@ const Catalog = props => {
         <span className={styles.numbers}>{chats.length}</span>
         <i
           className='fas fa-trash-alt'
-          onClick={event => deleteCatalog(event, _id)}
+          onClick={event => deleteCatalog(event, catalogId)}
         />
       </div>
     </div>

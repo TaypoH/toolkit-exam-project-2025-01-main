@@ -95,7 +95,7 @@ const sendMessageExtraReducers = createExtraReducers({
       messagesPreview.push(payload.preview);
     }
     const chatData = {
-      _id: payload.preview._id,
+      _id: payload.preview.id || payload.preview._id,
       participants: payload.preview.participants,
       favoriteList: payload.preview.favoriteList,
       blackList: payload.preview.blackList,
@@ -103,7 +103,11 @@ const sendMessageExtraReducers = createExtraReducers({
     state.chatData = { ...state.chatData, ...chatData };
     state.messagesPreview = messagesPreview;
     const exists = state.messages.some(
-      msg => (msg._id && msg._id === payload.message._id) || msg.createdAt === payload.message.createdAt
+      msg =>
+        ((msg.id || msg._id) &&
+          (msg.id || msg._id) ===
+            (payload.message.id || payload.message._id)) ||
+        msg.createdAt === payload.message.createdAt
     );
     if (!exists) {
       state.messages = [...state.messages, payload.message];
@@ -192,7 +196,10 @@ const addChatToCatalogExtraReducers = createExtraReducers({
   fulfilledReducer: (state, { payload }) => {
     const { catalogList } = state;
     for (let i = 0; i < catalogList.length; i++) {
-      if (catalogList[i]._id === payload._id) {
+      if (
+        (catalogList[i].id || catalogList[i]._id) ===
+        (payload.id || payload._id)
+      ) {
         catalogList[i].chats = payload.chats;
         break;
       }
@@ -240,7 +247,7 @@ const deleteCatalogExtraReducers = createExtraReducers({
     const { catalogList } = state;
     const newCatalogList = remove(
       catalogList,
-      catalog => payload.catalogId !== catalog._id
+      catalog => payload.catalogId !== (catalog.id || catalog._id)
     );
     state.catalogList = [...newCatalogList];
   },
@@ -262,7 +269,10 @@ const removeChatFromCatalogExtraReducers = createExtraReducers({
   fulfilledReducer: (state, { payload }) => {
     const { catalogList } = state;
     for (let i = 0; i < catalogList.length; i++) {
-      if (catalogList[i]._id === payload._id) {
+      if (
+        (catalogList[i].id || catalogList[i]._id) ===
+        (payload.id || payload._id)
+      ) {
         catalogList[i].chats = payload.chats;
         break;
       }
@@ -288,7 +298,10 @@ const changeCatalogNameExtraReducers = createExtraReducers({
   fulfilledReducer: (state, { payload }) => {
     const { catalogList } = state;
     for (let i = 0; i < catalogList.length; i++) {
-      if (catalogList[i]._id === payload._id) {
+      if (
+        (catalogList[i].id || catalogList[i]._id) ===
+        (payload.id || payload._id)
+      ) {
         catalogList[i].catalogName = payload.catalogName;
         break;
       }
@@ -330,7 +343,10 @@ const reducers = {
     }
     state.messagesPreview = messagesPreview;
     const exists = state.messages.some(
-      msg => (msg._id && msg._id === message._id) || msg.createdAt === message.createdAt
+      msg =>
+        ((msg.id || msg._id) &&
+          (msg.id || msg._id) === (message.id || message._id)) ||
+        msg.createdAt === message.createdAt
     );
     if (!exists) {
       state.messages = [...state.messages, message];

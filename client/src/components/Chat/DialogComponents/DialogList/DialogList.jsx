@@ -43,20 +43,18 @@ const DialogList = props => {
 
   const renderPreview = filterFunc => {
     const arrayList = [];
-    const {
-      userId,
-      preview,
-      goToExpandedDialog,
-      chatMode,
-      removeChat,
-    } = props;
+    const { userId, preview, goToExpandedDialog, chatMode, removeChat } = props;
     preview.forEach((chatPreview, index) => {
       const dialogNode = (
         <DialogBox
           interlocutor={chatPreview.interlocutor}
           chatPreview={chatPreview}
           userId={userId}
-          key={index}
+          key={
+            chatPreview.id ||
+            chatPreview._id ||
+            `preview-${index}-${chatPreview.participants.join('-')}`
+          }
           getTimeStr={getTimeStr}
           changeFavorite={changeFavorite}
           changeBlackList={changeBlackList}
