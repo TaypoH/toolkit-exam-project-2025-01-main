@@ -86,7 +86,7 @@ class Dialog extends React.Component {
   render () {
     const { chatData, userId } = this.props;
     return (
-      <>
+      <div className={styles.dialogContainer}>
         <ChatHeader userId={userId} />
         {this.renderMainDialog()}
         <div ref={this.messagesEnd} />
@@ -95,7 +95,7 @@ class Dialog extends React.Component {
         ) : (
           <ChatInput />
         )}
-      </>
+      </div>
     );
   }
 }

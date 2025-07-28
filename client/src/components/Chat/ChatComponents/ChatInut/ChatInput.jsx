@@ -23,18 +23,24 @@ const ChatInput = props => {
         onSubmit={submitHandler}
         initialValues={{ message: '' }}
         validationSchema={Schems.MessageSchema}
+        validateOnBlur={false}
+        validateOnChange={false}
+        validateOnSubmit={true}
       >
         <Form className={styles.form}>
-          <FormInput
-            name='message'
-            type='text'
-            label='message'
-            classes={{
-              container: styles.container,
-              input: styles.input,
-              notValid: styles.notValid,
-            }}
-          />
+          <div className={styles.inputWrapper}>
+            <FormInput
+              name='message'
+              type='text'
+              label='message'
+              classes={{
+                container: styles.container,
+                input: styles.input,
+                notValid: styles.notValid,
+                warning: styles.warning,
+              }}
+            />
+          </div>
           <button type='submit'>
             <img
               src={`${CONSTANTS.STATIC_IMAGES_PATH}send.png`}
