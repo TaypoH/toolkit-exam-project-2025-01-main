@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styles from './Footer.module.sass';
 import CONSTANTS from '../../constants';
 
-class Footer extends Component {
-  topFooterItemsRender = item => (
+const Footer = () => {
+  const topFooterItemsRender = item => (
     <div key={item.title}>
       <h4>{item.title}</h4>
-      {item.items.map(i => (
+      {item.items.map(i =>
         typeof i === 'object' && i.label && i.href ? (
           <a key={i.label} href={i.href}>
             {i.label}
@@ -16,23 +16,21 @@ class Footer extends Component {
             {i}
           </a>
         )
-      ))}
+      )}
     </div>
   );
 
-  topFooterRender () {
-    return CONSTANTS.FooterItems.map(item => this.topFooterItemsRender(item));
-  }
+  const topFooterRender = () => {
+    return CONSTANTS.FooterItems.map(item => topFooterItemsRender(item));
+  };
 
-  render () {
-    return (
-      <div className={styles.footerContainer}>
-        <div className={styles.footerTop}>
-          <div>{this.topFooterRender()}</div>
-        </div>
+  return (
+    <div className={styles.footerContainer}>
+      <div className={styles.footerTop}>
+        <div>{topFooterRender()}</div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Footer;
