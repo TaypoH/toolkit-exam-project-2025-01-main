@@ -86,7 +86,7 @@ const Dialog = props => {
   };
 
   const { chatData, userId } = props;
-  
+
   return (
     <div className={styles.dialogContainer}>
       <ChatHeader userId={userId} />
