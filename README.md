@@ -1,3 +1,9 @@
+## Demo Video
+
+Watch the project demonstration: [Project Demo](https://youtu.be/2ifsduzFjKU)
+
+---
+
 ### Running the Application
 
 To run docker containers in development mode:
