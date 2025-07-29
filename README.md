@@ -1,3 +1,53 @@
+### Running the Application
+
+To run docker containers in development mode:
+
+- **Command to start building images and containers:** `sudo bash start-dev.sh`
+
+- **Application starts at:** `http://localhost:5001` (frontend) and `http://localhost:3000` (backend)
+
+- **To check on which port the application started, you need to execute the command:** `sudo docker container inspect exam-project-2025-01-main-front-react-1`
+
+  Address at the end in the "IPAddress" field
+
+### Environment Configuration
+
+#### Server Configuration (`server/.env`)
+
+Variables are stored, you must specify your data for: `EMAIL_USER`, `EMAIL_PASS`
+
+```env
+PORT=
+EMAIL_USER=
+EMAIL_PASS=
+```
+
+
+
+### Database Setup
+
+The application uses both PostgreSQL and MongoDB:
+
+#### PostgreSQL Configuration
+- **Port:** `12346`
+- **User:** `postgres`
+- **Password:** `password`
+- **Database:** `todo-dev`
+- **Host:** `db-dev` (internal Docker network)
+
+#### MongoDB Configuration
+- **Port:** `12345`
+- **Database:** Default MongoDB instance
+
+### Project Structure
+
+- `client/` - React frontend application
+- `server/` - Node.js backend API
+- `docker-compose-dev.yaml` - Development environment configuration
+- `start-dev.sh` - Development startup script
+
+---
+
 # BUG FIXED
 
 Bugs fixed, all libraries updated, class components converted to functional ones
