@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Form, Formik } from 'formik';
 import { checkAuth, clearAuth } from '../../store/slices/authSlice';
@@ -8,75 +8,71 @@ import Schems from '../../utils/validators/validationSchems';
 import Error from '../Error/Error';
 import CONSTANTS from '../../constants';
 
-class LoginForm extends React.Component {
-  componentWillUnmount () {
-    this.props.authClear();
-  }
+const LoginForm = props => {
+  useEffect(() => {
+    return () => {
+      props.authClear();
+    };
+  }, [props.authClear]);
 
-  clicked = values => {
-    this.props.loginRequest({ data: values, navigate: this.props.navigate });
+  const clicked = values => {
+    props.loginRequest({ data: values, navigate: props.navigate });
   };
 
-  render () {
-    const { error, isFetching } = this.props.auth;
-    const { submitting, authClear } = this.props;
+  const { error, isFetching } = props.auth;
+  const { submitting, authClear } = props;
 
-    const formInputClasses = {
-      container: styles.inputContainer,
-      input: styles.input,
-      warning: styles.fieldWarning,
-      notValid: styles.notValid,
-      valid: styles.valid,
-    };
+  const formInputClasses = {
+    container: styles.inputContainer,
+    input: styles.input,
+    warning: styles.fieldWarning,
+    notValid: styles.notValid,
+    valid: styles.valid,
+  };
 
-    return (
-      <div className={styles.loginForm}>
-        {error && (
-          <Error
-            data={error.data}
-            status={error.status}
-            clearError={authClear}
+  return (
+    <div className={styles.loginForm}>
+      {error && (
+        <Error data={error.data} status={error.status} clearError={authClear} />
+      )}
+      <h2>LOGIN TO YOUR ACCOUNT</h2>
+      <Formik
+        initialValues={{
+          email: '',
+          password: '',
+        }}
+        onSubmit={clicked}
+        validationSchema={Schems.LoginSchem}
+      >
+        <Form>
+          <FormInput
+            classes={formInputClasses}
+            name='email'
+            type='text'
+            label='Email Address'
+            autoComplete='username'
           />
-        )}
-        <h2>LOGIN TO YOUR ACCOUNT</h2>
-        <Formik
-          initialValues={{
-            email: '',
-            password: '',
-          }}
-          onSubmit={this.clicked}
-          validationSchema={Schems.LoginSchem}
-        >
-          <Form>
-            <FormInput
-              classes={formInputClasses}
-              name='email'
-              type='text'
-              label='Email Address'
-              autoComplete='username'
-            />
-            <FormInput
-              classes={formInputClasses}
-              name='password'
-              type='password'
-              label='Password'
-              autoComplete='current-password'
-            />
-            <button
-              type='submit'
-              disabled={submitting}
-              className={styles.submitContainer}
-            >
-              <span className={styles.inscription}>
-                {isFetching ? 'Submitting...' : 'LOGIN'}
-              </span>
-            </button>
-          </Form>
-        </Formik>
-      </div>
-    );
-  }
-}
+          <FormInput
+            classes={formInputClasses}
+            name='password'
+            type='password'
+            label='Password'
+            autoComplete='current-password'
+          />
+          <button
+            type='submit'
+            disabled={submitting}
+            className={styles.submitContainer}
+          >
+            <span className={styles.inscription}>
+              {isFetching ? 'Submitting...' : 'LOGIN'}
+            </span>
+          </button>
+        </Form>
+      </Formik>
+    </div>
+  );
+};
 
 const mapStateToProps = state => {
   const { auth } = state;
