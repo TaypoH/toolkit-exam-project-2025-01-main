@@ -341,12 +341,15 @@ class Header extends React.Component {
                     </li>
                   </ul>
                 </li>
-                <li>
-                  <Link to='/events' style={{ textDecoration: 'none' }}>
-                    <span>EVENTS</span>
-                    <EventsMenuBadge />
-                  </Link>
-                </li>
+                {this.props.data &&
+                  this.props.data.role === CONSTANTS.CUSTOMER && (
+                    <li>
+                      <Link to='/events' style={{ textDecoration: 'none' }}>
+                        <span>EVENTS</span>
+                        <EventsMenuBadge />
+                      </Link>
+                    </li>
+                  )}
               </ul>
             </div>
             {this.props.data && this.props.data.role !== CONSTANTS.CREATOR && (
