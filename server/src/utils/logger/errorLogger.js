@@ -1,8 +1,13 @@
 const fs = require('fs').promises;
 const path = require('path');
-const CONSTANTS = require('../constants');
+const CONSTANTS = require('../../constants');
 
-const logFilePath = path.join(__dirname, '../../', CONSTANTS.LOGS_DIR, CONSTANTS.ERROR_LOG_FILE);
+const logFilePath = path.join(
+  __dirname,
+  '../../../',
+  CONSTANTS.LOGS_DIR,
+  CONSTANTS.ERROR_LOG_FILE
+);
 
 async function logError ({ message, code, stackTrace }) {
   const errorObject = {
