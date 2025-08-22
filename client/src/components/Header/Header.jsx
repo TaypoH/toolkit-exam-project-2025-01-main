@@ -26,9 +26,9 @@ function getEventsBadgeCount () {
   try {
     const events = JSON.parse(stored);
     return events.filter(event => {
-      const eventDate = new Date(event.date);
-      const notifyBeforeMs = (event.notifyBefore || 0) * 60 * 1000;
-      const wasNotify = eventDate.getTime() - notifyBeforeMs <= Date.now();
+      if (!event.remindAt) return false;
+      const remindAtMs = new Date(event.remindAt).getTime();
+      const wasNotify = remindAtMs <= Date.now();
       const isNew = !notifiedIds.includes(event.id);
       return wasNotify && isNew;
     }).length;

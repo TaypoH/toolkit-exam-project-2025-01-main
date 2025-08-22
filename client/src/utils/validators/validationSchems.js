@@ -208,22 +208,18 @@ export default {
         if (!value) return false;
         return new Date(value) > new Date();
       }),
-    notifyBefore: yup
-      .number()
-      .min(0, 'Cannot be less than 0')
-      .required('Notification time is required')
-      .test(
-        'notify-valid',
-        'Notify before must be less than time to event',
-        function (value) {
-          const { date } = this.parent;
-          if (!date || value == null) return true;
-          const eventDate = new Date(date);
-          const now = new Date();
-          const diffMinutes = (eventDate - now) / 60000;
-          return value <= diffMinutes;
-        }
-      ),
+    remindAt: yup
+      .string()
+      .required('Reminder time is required')
+      .test('remind-before-event', 'Reminder must be before event', function (value) {
+        const { date } = this.parent;
+        if (!date || !value) return false;
+        return new Date(value) < new Date(date);
+      })
+      .test('remind-in-future', 'Reminder must be in the future', value => {
+        if (!value) return false;
+        return new Date(value) > new Date();
+      }),
   }),
   CatalogSchema: yup.object({
     catalogName: yup
